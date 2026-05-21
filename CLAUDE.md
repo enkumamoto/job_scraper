@@ -4,7 +4,7 @@
 
 Scraper de vagas remotas internacionais voltado para profissionais de **DevOps / Platform Engineering / SRE**. Busca em múltiplos agregadores públicos, filtra por relevância técnica e exporta os resultados em CSV e JSON.
 
-O projeto foi construído para o perfil de **Eiji Kumamoto** (Senior DevOps Engineer), mas é configurável para qualquer perfil técnico via bloco `CONFIG` no topo do script principal.
+O projeto foi construído para o perfil de profissional Senior DevOps Engineer, mas é configurável para qualquer perfil técnico via bloco `CONFIG` no topo do script principal.
 
 ---
 
