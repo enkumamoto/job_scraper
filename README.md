@@ -19,8 +19,21 @@ Scraper de vagas remotas internacionais para profissionais de **DevOps / Platfor
 ## Instalação
 
 ```bash
-pip install requests beautifulsoup4 pandas rich
+pip install requests beautifulsoup4 pandas lxml rich
 ```
+
+> **Python 3.12 no Ubuntu/Debian** — se o pip reclamar de "externally managed environment":
+>
+> ```bash
+> pip3 install --break-system-packages beautifulsoup4 pandas lxml requests rich
+> ```
+>
+> Ou, preferindo ambiente isolado (recomendado):
+>
+> ```bash
+> python3 -m venv .venv && source .venv/bin/activate
+> pip install beautifulsoup4 pandas lxml requests rich
+> ```
 
 ---
 
@@ -30,10 +43,11 @@ pip install requests beautifulsoup4 pandas rich
 python job_scraper.py
 ```
 
-Gera dois arquivos no diretório atual:
+Gera três arquivos no diretório atual:
 
 - `vagas_devops_remote.csv`
 - `vagas_devops_remote.json`
+- `vagas_devops_remote.html` — relatório visual com filtros e busca
 
 ---
 
@@ -58,6 +72,7 @@ CONFIG = {
     "min_salary_usd": 0,        # 0 = sem filtro; ex: 80000 para filtrar abaixo de $80k
     "output_csv": "vagas_devops_remote.csv",
     "output_json": "vagas_devops_remote.json",
+    "output_html": "vagas_devops_remote.html",
 }
 ```
 

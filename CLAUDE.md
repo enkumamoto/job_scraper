@@ -27,8 +27,21 @@ O projeto foi construído para o perfil de profissional Senior DevOps Engineer, 
 ### Pré-requisitos
 
 ```bash
-pip install requests beautifulsoup4 pandas rich
+pip install requests beautifulsoup4 pandas lxml rich
 ```
+
+> **Python 3.12 no Ubuntu/Debian** — se o pip reclamar de "externally managed environment":
+>
+> ```bash
+> pip3 install --break-system-packages beautifulsoup4 pandas lxml requests rich
+> ```
+>
+> Ou, preferindo ambiente isolado:
+>
+> ```bash
+> python3 -m venv .venv && source .venv/bin/activate
+> pip install beautifulsoup4 pandas lxml requests rich
+> ```
 
 ### Rodar
 
@@ -36,7 +49,7 @@ pip install requests beautifulsoup4 pandas rich
 python job_scraper.py
 ```
 
-Os arquivos `vagas_devops_remote.csv` e `vagas_devops_remote.json` serão gerados no diretório atual.
+Os arquivos `vagas_devops_remote.csv`, `vagas_devops_remote.json` e `vagas_devops_remote.html` serão gerados no diretório atual.
 
 ---
 
