@@ -40,6 +40,7 @@ CONFIG = {
     "min_salary_usd": 0,        # 0 = sem filtro; ex: 80000 para filtrar abaixo de $80k
     "output_csv": "vagas_devops_remote.csv",
     "output_json": "vagas_devops_remote.json",
+    "output_html": "vagas_devops_remote.html",
 }
 
 HEADERS = {
@@ -362,6 +363,195 @@ def print_table(jobs: list[dict]) -> None:
     console.print(table)
 
 
+_SOURCE_COLORS = {
+    "RemoteOK":       "#4f46e5",
+    "WeWorkRemotely": "#16a34a",
+    "Himalayas":      "#7c3aed",
+    "Jobspresso":     "#ea580c",
+    "NoDesk":         "#0891b2",
+}
+
+
+def export_html(jobs: list[dict]) -> None:
+    import html as html_lib
+
+    def badge(source: str) -> str:
+        color = _SOURCE_COLORS.get(source, "#6b7280")
+        return (
+            f'<span class="badge" style="background:{color}">'
+            f'{html_lib.escape(source)}</span>'
+        )
+
+    def salary_html(salary: str) -> str:
+        if salary and salary != "—":
+            return f'<span class="salary">{html_lib.escape(salary)}</span>'
+        return '<span class="salary no-salary">—</span>'
+
+    cards_html = ""
+    sources = sorted({j["source"] for j in jobs})
+
+    for job in jobs:
+        src = html_lib.escape(job["source"])
+        cards_html += f"""
+        <article class="card" data-source="{src}">
+          <div class="card-header">
+            {badge(job["source"])}
+            <span class="location">{html_lib.escape(job.get("location","Remote"))}</span>
+          </div>
+          <h2 class="title">{html_lib.escape(job["title"])}</h2>
+          <p class="company">{html_lib.escape(job["company"])}</p>
+          {salary_html(job["salary"])}
+          <div class="card-footer">
+            <span class="found-at">{html_lib.escape(job["found_at"])}</span>
+            <a class="btn" href="{html_lib.escape(job['url'])}" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>"""
+
+    filter_buttons = '<button class="filter-btn active" data-filter="all">Todas</button>'
+    for src in sources:
+        color = _SOURCE_COLORS.get(src, "#6b7280")
+        count = sum(1 for j in jobs if j["source"] == src)
+        filter_buttons += (
+            f'<button class="filter-btn" data-filter="{html_lib.escape(src)}" '
+            f'style="--c:{color}">{html_lib.escape(src)} '
+            f'<span class="cnt">{count}</span></button>'
+        )
+
+    total = len(jobs)
+    with_salary = sum(1 for j in jobs if j["salary"] != "—")
+    generated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    html_content = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevOps Remote Jobs — {generated_at}</title>
+<style>
+  *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  :root {{
+    --bg: #0f172a; --surface: #1e293b; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  }}
+  body {{ font-family: system-ui, sans-serif; background: var(--bg); color: var(--text);
+          min-height: 100vh; padding: 2rem 1rem; }}
+  header {{ max-width: 1200px; margin: 0 auto 2rem; }}
+  h1 {{ font-size: 1.75rem; font-weight: 700; color: var(--accent); margin-bottom: .5rem; }}
+  .meta {{ color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }}
+  .meta strong {{ color: var(--text); }}
+  .controls {{ display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }}
+  #search {{
+    flex: 1; min-width: 200px; padding: .5rem .75rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: .95rem; outline: none;
+  }}
+  #search:focus {{ border-color: var(--accent); }}
+  .filters {{ display: flex; flex-wrap: wrap; gap: .5rem; }}
+  .filter-btn {{
+    padding: .35rem .8rem; border-radius: 99px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer;
+    font-size: .85rem; transition: all .15s;
+  }}
+  .filter-btn:hover {{ border-color: var(--c, var(--accent)); color: var(--text); }}
+  .filter-btn.active {{ background: var(--c, var(--accent)); border-color: var(--c, var(--accent));
+                        color: #fff; }}
+  .filter-btn[data-filter="all"] {{ --c: #38bdf8; }}
+  .cnt {{ opacity: .7; font-size: .8em; }}
+  #count-info {{ color: var(--muted); font-size: .85rem; margin: 1rem 0 .5rem;
+                 max-width: 1200px; margin-left: auto; margin-right: auto; }}
+  .grid {{
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem;
+  }}
+  .card {{
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: .6rem;
+    transition: border-color .15s, transform .15s;
+  }}
+  .card:hover {{ border-color: var(--accent); transform: translateY(-2px); }}
+  .card.hidden {{ display: none; }}
+  .card-header {{ display: flex; justify-content: space-between; align-items: center; }}
+  .badge {{
+    font-size: .75rem; font-weight: 600; padding: .2rem .6rem;
+    border-radius: 99px; color: #fff; letter-spacing: .02em;
+  }}
+  .location {{ font-size: .78rem; color: var(--muted); }}
+  .title {{ font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--text); }}
+  .company {{ font-size: .88rem; color: var(--muted); }}
+  .salary {{ font-size: .9rem; font-weight: 600; color: #4ade80; }}
+  .no-salary {{ color: var(--muted); font-weight: 400; }}
+  .card-footer {{ display: flex; justify-content: space-between; align-items: center; margin-top: auto; }}
+  .found-at {{ font-size: .75rem; color: var(--muted); }}
+  .btn {{
+    padding: .35rem .9rem; background: var(--accent); color: #0f172a;
+    border-radius: 8px; text-decoration: none; font-size: .85rem; font-weight: 600;
+    transition: opacity .15s;
+  }}
+  .btn:hover {{ opacity: .85; }}
+  .empty {{ text-align: center; color: var(--muted); padding: 4rem; grid-column: 1/-1; }}
+</style>
+</head>
+<body>
+<header>
+  <h1>DevOps Remote Jobs</h1>
+  <p class="meta">
+    Gerado em <strong>{generated_at}</strong> &nbsp;·&nbsp;
+    <strong>{total}</strong> vagas &nbsp;·&nbsp;
+    <strong>{with_salary}</strong> com salário
+  </p>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Buscar cargo, empresa..." autocomplete="off">
+    <div class="filters">{filter_buttons}</div>
+  </div>
+</header>
+<p id="count-info"></p>
+<main class="grid">{cards_html}
+  <p class="empty" id="empty-msg" style="display:none">Nenhuma vaga encontrada.</p>
+</main>
+<script>
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const search = document.getElementById('search');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const countInfo = document.getElementById('count-info');
+  const emptyMsg = document.getElementById('empty-msg');
+  let activeFilter = 'all';
+
+  function update() {{
+    const q = search.value.toLowerCase();
+    let visible = 0;
+    cards.forEach(c => {{
+      const matchFilter = activeFilter === 'all' || c.dataset.source === activeFilter;
+      const matchSearch = !q || c.textContent.toLowerCase().includes(q);
+      const show = matchFilter && matchSearch;
+      c.classList.toggle('hidden', !show);
+      if (show) visible++;
+    }});
+    countInfo.textContent = visible + ' vaga' + (visible !== 1 ? 's' : '') + ' exibida' + (visible !== 1 ? 's' : '');
+    emptyMsg.style.display = visible === 0 ? 'block' : 'none';
+  }}
+
+  filterBtns.forEach(btn => {{
+    btn.addEventListener('click', () => {{
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      update();
+    }});
+  }});
+
+  search.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>"""
+
+    with open(CONFIG["output_html"], "w", encoding="utf-8") as f:
+        f.write(html_content)
+    console.print(f"[green]HTML salvo: {CONFIG['output_html']}[/green]")
+
+
 def save_outputs(jobs: list[dict]) -> None:
     pd.DataFrame(jobs).to_csv(CONFIG["output_csv"], index=False, encoding="utf-8")
     console.print(f"[green]CSV salvo: {CONFIG['output_csv']}[/green]")
@@ -369,6 +559,8 @@ def save_outputs(jobs: list[dict]) -> None:
     with open(CONFIG["output_json"], "w", encoding="utf-8") as f:
         json.dump(jobs, f, ensure_ascii=False, indent=2)
     console.print(f"[green]JSON salvo: {CONFIG['output_json']}[/green]")
+
+    export_html(jobs)
 
 
 # ─────────────────────────────────────────────
