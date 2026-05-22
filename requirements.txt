@@ -3,3 +3,4 @@ beautifulsoup4
 lxml
 pandas
 rich
+streamlit>=1.28

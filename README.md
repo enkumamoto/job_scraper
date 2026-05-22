@@ -1,49 +1,62 @@
 # DevOps Remote Job Scraper
 
-Scraper de vagas remotas internacionais para profissionais de **DevOps / Platform Engineering / SRE**. Busca em múltiplos agregadores públicos, filtra por relevância técnica e exporta os resultados em CSV e JSON.
+Scraper de vagas remotas internacionais configurável para qualquer perfil técnico (DevOps, Backend, Frontend, SRE, etc.). Busca em múltiplos agregadores públicos, filtra por relevância técnica e exporta os resultados em CSV, JSON e HTML.
+
+Possui **interface gráfica via Streamlit** e também pode ser usado pela linha de comando.
 
 ---
 
 ## Fontes
 
-| Site             | Método        | Notas                         |
-|------------------|---------------|-------------------------------|
-| RemoteOK         | API JSON      | Retorna salários estruturados |
-| We Work Remotely | RSS feed      | Categoria DevOps/Sysadmin     |
+| Site             | Método        | Notas                            |
+|------------------|---------------|----------------------------------|
+| RemoteOK         | API JSON      | Retorna salários estruturados    |
+| We Work Remotely | RSS feed      | Categoria DevOps/Sysadmin        |
 | Himalayas        | HTML scraping | Remote-only, boa cobertura EU/US |
-| Jobspresso       | HTML scraping | Curated, menor volume         |
-| NoDesk           | HTML scraping | Aggregator genérico           |
+| Jobspresso       | HTML scraping | Curated, menor volume            |
+| NoDesk           | HTML scraping | Aggregator genérico              |
 
 ---
 
 ## Instalação
 
 ```bash
-pip install requests beautifulsoup4 pandas lxml rich
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-> **Python 3.12 no Ubuntu/Debian** — se o pip reclamar de "externally managed environment":
+> **Python 3.12 no Ubuntu/Debian** sem venv — se o pip reclamar de "externally managed environment":
 >
 > ```bash
-> pip3 install --break-system-packages beautifulsoup4 pandas lxml requests rich
-> ```
->
-> Ou, preferindo ambiente isolado (recomendado):
->
-> ```bash
-> python3 -m venv .venv && source .venv/bin/activate
-> pip install beautifulsoup4 pandas lxml requests rich
+> pip3 install --break-system-packages -r requirements.txt
 > ```
 
 ---
 
 ## Uso
 
+### Interface gráfica (recomendado)
+
+```bash
+streamlit run app.py
+```
+
+O browser abre em `http://localhost:8501`. Na barra lateral você configura:
+
+- **Cargos buscados** — multiselect com opção de adicionar cargos personalizados
+- **Tecnologias** — filtro de skills (DevOps, Backend e Frontend)
+- **Termos a excluir** — descarta vagas com restrições geográficas ou de visto
+- **Salário mínimo** — valor + escolha de moeda (USD, EUR, GBP)
+
+Após a busca, os resultados aparecem em tabela com links clicáveis e botões de download (CSV, JSON, HTML).
+
+### Linha de comando
+
 ```bash
 python job_scraper.py
 ```
 
-Gera três arquivos no diretório atual:
+Usa o bloco `CONFIG` fixo no topo do script e gera três arquivos no diretório atual:
 
 - `vagas_devops_remote.csv`
 - `vagas_devops_remote.json`
@@ -51,7 +64,7 @@ Gera três arquivos no diretório atual:
 
 ---
 
-## Configuração
+## Configuração (CLI)
 
 Edite o bloco `CONFIG` no topo de `job_scraper.py`:
 
@@ -97,7 +110,7 @@ Vagas com salário explícito aparecem primeiro na saída. Duplicatas entre font
 1. Crie `scrape_novosite() -> list[dict]`
 2. Use `HEADERS` global para os requests
 3. Filtre com `is_relevant()` e `contains_exclusion()`
-4. Adicione `("Nome", scrape_novosite)` na lista `scrapers` em `main()`
+4. Adicione `("Nome", scrape_novosite)` na lista `scrapers` dentro de `run_scraper()`
 
 ```python
 def scrape_novosite() -> list[dict]:
@@ -128,6 +141,7 @@ def scrape_novosite() -> list[dict]:
 - Sites React/Vue SPA podem retornar HTML incompleto — considerar `playwright` nesses casos
 - Seletores CSS podem quebrar com atualizações de layout — verificar periodicamente
 - RemoteOK pode retornar 403 em alguns IPs; usar proxy se necessário
+- Filtro de salário mínimo só se aplica a vagas com valor estruturado (RemoteOK); conversão de moeda é simbólica
 
 ---
 
