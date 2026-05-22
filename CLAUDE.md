@@ -2,9 +2,9 @@
 
 ## Visão Geral do Projeto
 
-Scraper de vagas remotas internacionais voltado para profissionais de **DevOps / Platform Engineering / SRE**. Busca em múltiplos agregadores públicos, filtra por relevância técnica e exporta os resultados em CSV e JSON.
+Scraper de vagas remotas internacionais configurável para qualquer perfil técnico (DevOps, Backend, Frontend, SRE, etc.). Busca em múltiplos agregadores públicos, filtra por relevância técnica e exporta os resultados em CSV, JSON e HTML.
 
-O projeto foi construído para o perfil de profissional Senior DevOps Engineer, mas é configurável para qualquer perfil técnico via bloco `CONFIG` no topo do script principal.
+Possui interface gráfica via **Streamlit** (`app.py`) e modo CLI via `job_scraper.py`. O bloco `CONFIG` no topo do script define os parâmetros padrão usados pela CLI; a GUI sobrescreve esses valores em tempo de execução sem alterar o arquivo.
 
 ---
 
@@ -12,9 +12,12 @@ O projeto foi construído para o perfil de profissional Senior DevOps Engineer, 
 
 ```
 .
-├── job_scraper.py           # Script principal
+├── job_scraper.py           # Lógica de scraping, filtragem e exportação
+├── app.py                   # Interface gráfica Streamlit
+├── requirements.txt         # Dependências Python
 ├── vagas_devops_remote.csv  # Output gerado (após execução)
 ├── vagas_devops_remote.json # Output gerado (após execução)
+├── vagas_devops_remote.html # Output gerado (após execução)
 ├── CLAUDE.md                # Este arquivo
 └── .claude/
     └── SKILLS.md            # Documentação técnica de habilidades do projeto
@@ -27,29 +30,31 @@ O projeto foi construído para o perfil de profissional Senior DevOps Engineer, 
 ### Pré-requisitos
 
 ```bash
-pip install requests beautifulsoup4 pandas lxml rich
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-> **Python 3.12 no Ubuntu/Debian** — se o pip reclamar de "externally managed environment":
+> **Python 3.12 no Ubuntu/Debian** sem venv:
 >
 > ```bash
-> pip3 install --break-system-packages beautifulsoup4 pandas lxml requests rich
-> ```
->
-> Ou, preferindo ambiente isolado:
->
-> ```bash
-> python3 -m venv .venv && source .venv/bin/activate
-> pip install beautifulsoup4 pandas lxml requests rich
+> pip3 install --break-system-packages -r requirements.txt
 > ```
 
-### Rodar
+### Interface gráfica (Streamlit)
+
+```bash
+streamlit run app.py
+```
+
+Abre `http://localhost:8501` no browser. A GUI permite configurar keywords, tecnologias, termos de exclusão e salário mínimo com moeda (USD/EUR/GBP) sem editar nenhum arquivo.
+
+### Linha de comando
 
 ```bash
 python job_scraper.py
 ```
 
-Os arquivos `vagas_devops_remote.csv`, `vagas_devops_remote.json` e `vagas_devops_remote.html` serão gerados no diretório atual.
+Usa o `CONFIG` fixo no topo do script. Gera `vagas_devops_remote.csv`, `.json` e `.html` no diretório atual.
 
 ---
 
@@ -105,7 +110,8 @@ CONFIG = {
 1. Crie uma função `scrape_novosite() -> list[dict]`
 2. Use `HEADERS` global para os requests
 3. Filtre com `is_relevant()` e `contains_exclusion()`
-4. Adicione a tupla `("Nome", scrape_novosite)` na lista `scrapers` dentro de `main()`
+4. Adicione a tupla `("Nome", scrape_novosite)` na lista `scrapers` dentro de `run_scraper()`
+   - A GUI e o CLI usam `run_scraper()` — adicionar em um lugar cobre os dois modos
 
 Exemplo mínimo:
 

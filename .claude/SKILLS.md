@@ -1,4 +1,4 @@
-# SKILL.md — DevOps Remote Job Scraper
+# SKILLS.md — DevOps Remote Job Scraper
 
 Documentação técnica das habilidades e padrões utilizados neste projeto. Use como referência para manutenção, extensão e onboarding.
 
@@ -286,10 +286,87 @@ def scrape_spa_site() -> list[dict]:
 
 ---
 
+## 12. Interface Gráfica — Streamlit (`app.py`)
+
+### Arquitetura
+
+`app.py` importa `run_scraper` e `save_outputs` de `job_scraper.py`. A lógica de scraping não é duplicada.
+
+```
+app.py  →  run_scraper(config, progress_callback)  →  scrapers individuais
+                                                    →  deduplicate + sort
+        →  save_outputs(jobs)   # salva CSV, JSON, HTML
+        →  st.dataframe(...)    # exibe na UI
+```
+
+### Padrão de execução com progresso (`st.status`)
+
+```python
+with st.status("Buscando vagas...", expanded=True) as status:
+    def on_progress(source_name: str, count: int) -> None:
+        st.write(f"✅ **{source_name}** — {count} vagas")
+
+    jobs = run_scraper(config, progress_callback=on_progress)
+    status.update(label="Concluído!", state="complete", expanded=False)
+```
+
+`st.status()` requer Streamlit ≥ 1.28.
+
+### Session state
+
+Resultados ficam em `st.session_state.jobs` para sobreviver a reruns do Streamlit:
+
+```python
+if "jobs" not in st.session_state:
+    st.session_state.jobs = []
+
+# após a busca:
+st.session_state.jobs = jobs
+```
+
+### Multiselect com opções personalizadas
+
+O campo de texto livre (`st.text_input`) adiciona valores à lista do `st.multiselect` em tempo de execução, sem alterar as constantes do arquivo:
+
+```python
+custom_kw = st.text_input("Adicionar cargo personalizado")
+if custom_kw:
+    kw_lower = custom_kw.strip().lower()
+    if kw_lower not in [k.lower() for k in keywords]:
+        keywords = keywords + [kw_lower]
+```
+
+### Regra: todo default deve estar em options
+
+`st.multiselect` lança `StreamlitAPIException` se qualquer valor de `default` não existir em `options`. Ao adicionar itens ao `DEFAULT_CONFIG`, adicionar também às listas `ALL_KEYWORDS` / `ALL_SKILLS` / `ALL_EXCLUDE` em `app.py`.
+
+---
+
+## 13. `run_scraper` — API pública de `job_scraper.py`
+
+Função adicionada para desacoplar a GUI do CLI:
+
+```python
+def run_scraper(config: dict, progress_callback=None) -> list[dict]:
+    """
+    Executa todos os scrapers com o config fornecido e retorna as vagas.
+    progress_callback(source_name: str, count: int) é chamado após cada scraper.
+    """
+```
+
+- Aplica `config` ao `CONFIG` global temporariamente (restaura no `finally`)
+- A GUI e o CLI passam pelo mesmo código de scraping
+- `main()` passou a chamar `run_scraper()` internamente
+
+**Ponto de extensão:** para adicionar um novo site, inserir a tupla `("Nome", scrape_fn)` na lista `scrapers` dentro de `run_scraper()` — cobre GUI e CLI ao mesmo tempo.
+
+---
+
 ## Referências
 
 - [BeautifulSoup Docs](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 - [Requests Docs](https://requests.readthedocs.io/)
 - [Rich Docs](https://rich.readthedocs.io/)
+- [Streamlit Docs](https://docs.streamlit.io/)
 - [RemoteOK API](https://remoteok.com/api)
 - [WWR RSS Feeds](https://weworkremotely.com/remote-jobs.rss)

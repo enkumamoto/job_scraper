@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevOps Remote Jobs — 22/05/2026 07:01</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text);
+          min-height: 100vh; padding: 2rem 1rem; }
+  header { max-width: 1200px; margin: 0 auto 2rem; }
+  h1 { font-size: 1.75rem; font-weight: 700; color: var(--accent); margin-bottom: .5rem; }
+  .meta { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
+  .meta strong { color: var(--text); }
+  .controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+  #search {
+    flex: 1; min-width: 200px; padding: .5rem .75rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: .95rem; outline: none;
+  }
+  #search:focus { border-color: var(--accent); }
+  .filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .filter-btn {
+    padding: .35rem .8rem; border-radius: 99px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer;
+    font-size: .85rem; transition: all .15s;
+  }
+  .filter-btn:hover { border-color: var(--c, var(--accent)); color: var(--text); }
+  .filter-btn.active { background: var(--c, var(--accent)); border-color: var(--c, var(--accent));
+                        color: #fff; }
+  .filter-btn[data-filter="all"] { --c: #38bdf8; }
+  .cnt { opacity: .7; font-size: .8em; }
+  #count-info { color: var(--muted); font-size: .85rem; margin: 1rem 0 .5rem;
+                 max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: .6rem;
+    transition: border-color .15s, transform .15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card.hidden { display: none; }
+  .card-header { display: flex; justify-content: space-between; align-items: center; }
+  .badge {
+    font-size: .75rem; font-weight: 600; padding: .2rem .6rem;
+    border-radius: 99px; color: #fff; letter-spacing: .02em;
+  }
+  .location { font-size: .78rem; color: var(--muted); }
+  .title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .company { font-size: .88rem; color: var(--muted); }
+  .salary { font-size: .9rem; font-weight: 600; color: #4ade80; }
+  .no-salary { color: var(--muted); font-weight: 400; }
+  .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .found-at { font-size: .75rem; color: var(--muted); }
+  .btn {
+    padding: .35rem .9rem; background: var(--accent); color: #0f172a;
+    border-radius: 8px; text-decoration: none; font-size: .85rem; font-weight: 600;
+    transition: opacity .15s;
+  }
+  .btn:hover { opacity: .85; }
+  .empty { text-align: center; color: var(--muted); padding: 4rem; grid-column: 1/-1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>DevOps Remote Jobs</h1>
+  <p class="meta">
+    Gerado em <strong>22/05/2026 07:01</strong> &nbsp;·&nbsp;
+    <strong>45</strong> vagas &nbsp;·&nbsp;
+    <strong>7</strong> com salário
+  </p>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Buscar cargo, empresa..." autocomplete="off">
+    <div class="filters"><button class="filter-btn active" data-filter="all">Todas</button><button class="filter-btn" data-filter="RemoteOK" style="--c:#4f46e5">RemoteOK <span class="cnt">21</span></button><button class="filter-btn" data-filter="WeWorkRemotely" style="--c:#16a34a">WeWorkRemotely <span class="cnt">24</span></button></div>
+  </div>
+</header>
+<p id="count-info"></p>
+<main class="grid">
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Software Engineer Platform</h2>
+          <p class="company">Benchling</p>
+          <span class="salary">$176,367 – $265,000/yr</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-software-engineer-platform-benchling-1131626" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">DevRel Content Creator</h2>
+          <p class="company">SuperPlane</p>
+          <span class="salary">$70,000 – $150,000/yr</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-devrel-content-creator-superplane-1131594" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Software engineer</h2>
+          <p class="company">Sticker Mule</p>
+          <span class="salary">$150,000 – $250,000/yr</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-software-engineer-sticker-mule-1131592" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior AI System Software Developer</h2>
+          <p class="company">Wealthsimple Technologies</p>
+          <span class="salary">$151,200 – $189,000/yr</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-ai-system-software-developer-wealthsimple-technologies-1131572" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Atria Physician Practice New York Pc: Staff Software Engineer, Product</h2>
+          <p class="company">—</p>
+          <span class="salary">$200,000–$280,000,</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/atria-physician-practice-new-york-pc-staff-software-engineer-product" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Cloudpepper: Senior Platform / DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary">$150,000–$180,000/year</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/cloudpepper-senior-platform-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Close: Senior Software Engineer - Backend/Python - USA Only (100% Remote)</h2>
+          <p class="company">—</p>
+          <span class="salary">$140,000</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/close-senior-software-engineer-backend-python-usa-only-100-remote-1" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Fraud Risk Analyst</h2>
+          <p class="company">Braviant Holdings</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-fraud-risk-analyst-braviant-holdings-1131632" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Member of Technical Staff Applied ML RecSys</h2>
+          <p class="company">Liquid AI</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-member-of-technical-staff-applied-ml-recsys-liquid-ai-1131627" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Database Reliability Engineer</h2>
+          <p class="company">Cloudlinux</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-database-reliability-engineer-cloudlinux-1131613" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Forward Deployed Engineer Agentic Platform</h2>
+          <p class="company">Cohere</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-forward-deployed-engineer-agentic-platform-cohere-1131611" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Software Engineer</h2>
+          <p class="company">Obsidian Security</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-software-engineer-obsidian-security-1131595" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Staff Engineer Platform Engineering</h2>
+          <p class="company">HighLevel</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-staff-engineer-platform-engineering-highlevel-1131588" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Staff Backend Engineer Core Product</h2>
+          <p class="company">Kalepa</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-staff-backend-engineer-core-product-kalepa-1131586" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Software Engineer</h2>
+          <p class="company">CentralReach</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-software-engineer-centralreach-1131578" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Sales Engineer</h2>
+          <p class="company">Glia</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-sales-engineer-glia-1131576" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Engenharia Software Engineer III Golang</h2>
+          <p class="company">Stone</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-engenharia-software-engineer-iii-golang-stone-1131575" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Software Engineer</h2>
+          <p class="company">Phaidra</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-software-engineer-phaidra-1131567" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Tier II III UC Support Engineer</h2>
+          <p class="company">TTEC Digital</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-tier-ii-iii-uc-support-engineer-ttec-digital-1131561" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Manager Platform Engineering</h2>
+          <p class="company">Natera</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-manager-platform-engineering-natera-1131552" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Tooling Engineer</h2>
+          <p class="company">Unikraft</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-tooling-engineer-unikraft-1131540" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Lead Software Engineer</h2>
+          <p class="company">CSC Generation</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-lead-software-engineer-csc-generation-1131529" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Senior Software Engineer I</h2>
+          <p class="company">Clariti Cloud, Inc.</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-senior-software-engineer-i-clariti-cloud-inc-1131527" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="RemoteOK">
+          <div class="card-header">
+            <span class="badge" style="background:#4f46e5">RemoteOK</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Engineering Manager AI Fleet Management &amp;amp; Honk</h2>
+          <p class="company">Spotify</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://remoteOK.com/remote-jobs/remote-engineering-manager-ai-fleet-management-amp-honk-spotify-1131520" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Cubos Tecnologia: [Cubos DevOps] Pessoa Engenheira de DevOps Pleno</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/cubos-tecnologia-cubos-devops-pessoa-engenheira-de-devops-pleno" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Radix: Profissional IaC| DevOps</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/radix-profissional-iac-devops" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Alice: DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/alice-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Catamaran Research: Platform Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/catamaran-research-platform-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Mutt Data: Devops</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/mutt-data-devops" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Rhino Partners: DevOps Engineer (Remote)</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/rhino-partners-devops-engineer-remote" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Woliba: Senior Devops Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/woliba-senior-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Kasha: Senior DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/kasha-senior-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Vexxhost: OpenStack Cloud Engineer (DevOps)</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/vexxhost-openstack-cloud-engineer-devops" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">Interop Labs: DevOps Lead</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/interop-labs-devops-lead" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Careers - Think Digitally: DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/careers-think-digitally-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Cloud Counselage Pvt Ltd: DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/cloud-counselage-pvt-ltd-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Tikal: Senior DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/tikal-senior-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Artificial Solutions: DevOps Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/artificial-solutions-devops-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">OnTheGoSystems: Senior Ruby on Rails Developer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/onthegosystems-senior-ruby-on-rails-developer-2" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote (Worldwide)</span>
+          </div>
+          <h2 class="title">bunny.net: Staff Software Engineer (Magic Containers)</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/bunny-net-staff-software-engineer-magic-containers" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Praia Health Inc.: Staff Software Engineer - Data Infrastructure</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/praia-health-inc-staff-software-engineer-data-infrastructure" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">comparis.ch: Backend Engineer, 80-100% (f/m/x)</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/comparis-ch-backend-engineer-80-100-f-m-x" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Urban Legend: BACKEND ENGINEER (MID–SENIOR)</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/urban-legend-backend-engineer-mid-senior" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Reveleer: Full Stack AI Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/reveleer-full-stack-ai-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+        <article class="card" data-source="WeWorkRemotely">
+          <div class="card-header">
+            <span class="badge" style="background:#16a34a">WeWorkRemotely</span>
+            <span class="location">Remote</span>
+          </div>
+          <h2 class="title">Cue: Senior Software Engineer</h2>
+          <p class="company">—</p>
+          <span class="salary no-salary">—</span>
+          <div class="card-footer">
+            <span class="found-at">2026-05-22 07:01</span>
+            <a class="btn" href="https://weworkremotely.com/remote-jobs/cue-senior-software-engineer" target="_blank" rel="noopener">
+              Ver vaga →
+            </a>
+          </div>
+        </article>
+  <p class="empty" id="empty-msg" style="display:none">Nenhuma vaga encontrada.</p>
+</main>
+<script>
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const search = document.getElementById('search');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const countInfo = document.getElementById('count-info');
+  const emptyMsg = document.getElementById('empty-msg');
+  let activeFilter = 'all';
+
+  function update() {
+    const q = search.value.toLowerCase();
+    let visible = 0;
+    cards.forEach(c => {
+      const matchFilter = activeFilter === 'all' || c.dataset.source === activeFilter;
+      const matchSearch = !q || c.textContent.toLowerCase().includes(q);
+      const show = matchFilter && matchSearch;
+      c.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    countInfo.textContent = visible + ' vaga' + (visible !== 1 ? 's' : '') + ' exibida' + (visible !== 1 ? 's' : '');
+    emptyMsg.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      update();
+    });
+  });
+
+  search.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>

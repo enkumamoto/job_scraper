@@ -567,29 +567,47 @@ def save_outputs(jobs: list[dict]) -> None:
 # MAIN
 # ─────────────────────────────────────────────
 
+def run_scraper(config: dict, progress_callback=None) -> list[dict]:
+    """
+    Executa todos os scrapers com o config fornecido e retorna as vagas.
+    progress_callback(source_name: str, count: int) é chamado após cada scraper.
+    """
+    global CONFIG
+    _original = CONFIG.copy()
+    CONFIG.update(config)
+    try:
+        scrapers = [
+            ("Himalayas", scrape_himalayas),
+            ("We Work Remotely", scrape_weworkremotely),
+            ("RemoteOK", scrape_remoteok),
+            ("Jobspresso", scrape_jobspresso),
+            ("NoDesk", scrape_nodesk),
+        ]
+        all_jobs: list[dict] = []
+        for name, fn in scrapers:
+            results = fn()
+            all_jobs.extend(results)
+            if progress_callback:
+                progress_callback(name, len(results))
+
+        all_jobs = deduplicate(all_jobs)
+        all_jobs.sort(key=lambda j: (j["salary"] == "—", j["source"]))
+        return all_jobs
+    finally:
+        CONFIG.clear()
+        CONFIG.update(_original)
+
+
 def main() -> None:
     console.rule("[bold blue]DevOps Remote Job Scraper[/bold blue]")
     console.print(f"Keywords: [cyan]{', '.join(CONFIG['keywords'])}[/cyan]")
     console.print(f"Must-have skills: [yellow]{', '.join(CONFIG['must_have_any'])}[/yellow]")
     console.print()
 
-    scrapers = [
-        ("Himalayas", scrape_himalayas),
-        ("We Work Remotely", scrape_weworkremotely),
-        ("RemoteOK", scrape_remoteok),
-        ("Jobspresso", scrape_jobspresso),
-        ("NoDesk", scrape_nodesk),
-    ]
+    def _log(name: str, count: int) -> None:
+        console.print(f"  → {name}... [green]{count} vagas[/green]")
 
-    all_jobs: list[dict] = []
-    for name, scraper in scrapers:
-        console.print(f"  → {name}...", end=" ")
-        results = scraper()
-        console.print(f"[green]{len(results)} vagas[/green]")
-        all_jobs.extend(results)
-
-    all_jobs = deduplicate(all_jobs)
-    all_jobs.sort(key=lambda j: (j["salary"] == "—", j["source"]))
+    all_jobs = run_scraper(CONFIG, progress_callback=_log)
 
     console.print()
     console.print(f"[bold]Total de vagas únicas: {len(all_jobs)}[/bold]")
