@@ -149,8 +149,6 @@ def scrape_novosite() -> list[dict]:
 
 ## Próximos Passos
 
-- [ ] Suporte a `playwright` para sites JS-heavy (Greenhouse, Lever)
-- [ ] Modo `--watch` para rodar em intervalos via cron
 - [ ] Alerta por e-mail ou Telegram para novas vagas
 - [ ] Filtro de senioridade (senior, staff, principal)
 - [ ] Score de relevância por match de skills do perfil
