@@ -89,7 +89,7 @@ CONFIG = {
 
 ## Lógica de Filtragem
 
-1. **`is_relevant(title, description)`** — verifica se o título bate com uma keyword OU se a descrição contém uma skill obrigatória
+1. **`is_relevant(title, description)`** — verifica se o título bate com uma keyword OU se o **título** contém uma skill obrigatória; a descrição é usada apenas para exclusão
 2. **`contains_exclusion(text)`** — descarta vagas com termos como "US Only", "clearance", "on-site"
 3. **`deduplicate(jobs)`** — remove duplicatas por `(title[:40], company[:30])`
 4. **Ordenação final** — vagas com salário explícito aparecem primeiro

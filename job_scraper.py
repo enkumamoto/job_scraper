@@ -31,7 +31,7 @@ CONFIG = {
     ],
     "must_have_any": [          # vaga precisa ter pelo menos um desses
         "terraform", "ansible", "kubernetes", "openshift",
-        "aws", "azure", "ci/cd", "iac", "remote",
+        "aws", "azure", "ci/cd", "iac",
     ],
     "exclude_terms": [          # vagas com esses termos são descartadas
         "us only", "us citizens", "clearance", "on-site", "onsite",
@@ -77,8 +77,9 @@ def is_relevant(title: str, description: str = "") -> bool:
     combined = f"{title} {description}".lower()
     if contains_exclusion(combined):
         return False
-    title_match = any(kw in title.lower() for kw in CONFIG["keywords"])
-    return title_match or has_relevant_skills(combined)
+    title_lower = title.lower()
+    title_match = any(kw in title_lower for kw in CONFIG["keywords"])
+    return title_match or has_relevant_skills(title_lower)
 
 
 def extract_salary(text: str) -> str:

@@ -76,7 +76,7 @@ CONFIG = {
     ],
     "must_have_any": [          # vaga precisa ter pelo menos um desses
         "terraform", "ansible", "kubernetes", "openshift",
-        "aws", "azure", "ci/cd", "iac", "remote",
+        "aws", "azure", "ci/cd", "iac",
     ],
     "exclude_terms": [          # vagas com esses termos são descartadas
         "us only", "us citizens", "clearance", "on-site", "onsite",
@@ -95,11 +95,13 @@ CONFIG = {
 
 ```
 vaga
- └─ contains_exclusion()  →  descarta ("US Only", "clearance", "on-site"...)
+ └─ contains_exclusion()  →  descarta se título ou descrição tiver "US Only", "clearance"...
  └─ is_relevant()
-     ├─ keyword no título       →  aceita
-     └─ skill na descrição      →  aceita (terraform, kubernetes, aws...)
+     ├─ keyword no título       →  aceita ("devops", "platform engineer", "sre"...)
+     └─ skill no título         →  aceita (terraform, kubernetes, aws...)
 ```
+
+> **Nota:** a descrição é usada apenas para exclusão, nunca para aceitar uma vaga. Isso evita que vagas de Marketing/RH passem o filtro por mencionarem "aws" ou "kubernetes" no texto da empresa.
 
 Vagas com salário explícito aparecem primeiro na saída. Duplicatas entre fontes são removidas por `(título[:40], empresa[:30])`.
 
