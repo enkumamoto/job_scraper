@@ -96,10 +96,10 @@ def has_relevant_skills(text: str) -> bool:
 
 ```
 vaga
- └─ contains_exclusion()  →  descarta se tiver "US Only", "clearance", etc.
+ └─ contains_exclusion()  →  descarta se título OU descrição tiver "US Only", "clearance", etc.
  └─ is_relevant()
-     ├─ keyword no título       →  aceita
-     └─ has_relevant_skills()   →  aceita (busca em título + descrição)
+     ├─ keyword no título       →  aceita ("devops", "platform engineer", "sre"...)
+     └─ has_relevant_skills()   →  aceita (busca SOMENTE no título)
 ```
 
 ### Padrão de implementação
@@ -109,16 +109,17 @@ def is_relevant(title: str, description: str = "") -> bool:
     combined = f"{title} {description}".lower()
     if contains_exclusion(combined):
         return False
-    title_match = any(kw in title.lower() for kw in CONFIG["keywords"])
-    return title_match or has_relevant_skills(combined)
+    title_lower = title.lower()
+    title_match = any(kw in title_lower for kw in CONFIG["keywords"])
+    return title_match or has_relevant_skills(title_lower)
 ```
 
-> **Nota:** `has_relevant_skills` recebe o texto combinado (`título + descrição`) já em lowercase. Não passar só o título.
+> **Importante:** `has_relevant_skills` recebe **apenas o título** em lowercase. Passar o combined (título + descrição) causava falsos positivos: vagas de Marketing/RH em empresas de cloud mencionavam "aws" na descrição e passavam o filtro.
 
 ### Como calibrar
 
 - Se estiver retornando vagas irrelevantes → adicionar termos em `exclude_terms`
-- Se estiver perdendo vagas relevantes → adicionar keywords ou skills em `must_have_any`
+- Se estiver perdendo vagas relevantes → adicionar keywords em `keywords` ou skills em `must_have_any` (serão checados no título)
 - Para perfis diferentes (ex: Frontend, Data Engineer) → trocar `keywords` e `must_have_any` inteiramente
 
 ---
@@ -338,7 +339,7 @@ if custom_kw:
 
 ### Regra: todo default deve estar em options
 
-`st.multiselect` lança `StreamlitAPIException` se qualquer valor de `default` não existir em `options`. Ao adicionar itens ao `DEFAULT_CONFIG`, adicionar também às listas `ALL_KEYWORDS` / `ALL_SKILLS` / `ALL_EXCLUDE` em `app.py`.
+`st.multiselect` lança `StreamlitAPIException` se qualquer valor de `default` não existir em `options`. Ao adicionar itens ao `CONFIG` em `job_scraper.py`, adicionar também às listas `ALL_KEYWORDS` / `ALL_SKILLS` / `ALL_EXCLUDE` em `app.py`. Termos que não fazem sentido como skill (ex: `"remote"`) não devem entrar em `must_have_any`.
 
 ---
 
